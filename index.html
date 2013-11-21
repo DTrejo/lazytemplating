@@ -1,0 +1,145 @@
+<html><body>
+<style>
+  body {
+    width: 32em;
+    font-size: 125%;
+    margin: 0 auto;
+  }
+  th > td {
+    text-align: left;
+  }
+  #output, #template {
+    width: 100%;
+  }
+  textarea {
+    font-size: .7em;
+  }
+  input {
+    font-size: .9em;
+  }
+  h1 {
+    margin-bottom: 0;
+  }
+  .partial {
+    padding: .5em 1em;
+    background-color: lightyellow;
+  }
+  .partial + .partial {
+    margin-top: 1em;
+  }
+</style>
+<h1>lazy templating</h1>
+<br>
+
+<div class="partial">
+  <label>Template name: <input type=text placeholder="template-name" value="tutorial-intro"> = {{tutorial-intro}}</input></label>
+  <table>
+    <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
+    <tr>
+      <td><input type="text" placeholder="variable-name" value="url"></td>
+      <td>= {{url}}</td>
+      <td>= <input type=text value="http://www.airpair.com/angularjs/code-mentor-tony-childs"></input></td>
+      <td>&#8592; <input type=text value=hello></input></td>
+    </tr>
+    <tr><td><input type="text" placeholder="variable-name"></td>
+      <td>= {{}}</td>
+      <td>= <input type=text placeholder="put a value here"></input></td>
+      <td>&#8592; <input type=text placeholder="default value"></input></td>
+    </tr>
+  </table>
+
+  <span>template:</span>
+  <textarea id=template class=js-autoheight>
+    <div class="tutorial-intro">
+      <a href="{{url}}">
+        <img title="Tony Childs AngularJS Code Mentor and Consultant" alt="AngularJS Code Mentor and Consultant Tony Childs" src="https://pbs.twimg.com/profile_images/599865688/icon_me_bigger.png" width="100px" class="tutorial-author circular" />
+      </a>
+      <p class="tutorial-description">
+        Tony Childs is an AngularJS consultant at Google. He has been coding since 1999 and consulting...
+        <a href="{{url}}">Readmore</a>
+      </p>
+      <div style="clear:both"></div>
+    </div>
+  </textarea>
+</div>
+
+<div class="partial">
+  <label>Template name: <input type=text placeholder="template-name" value="sentence"></input> = {{sentence}}</label>
+  <table>
+    <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
+    <tr>
+      <td><input type="text" placeholder="variable-name" value="words"></td>
+      <td>= {{words}}</td>
+      <td>= <input type=text value=hello></input></td>
+      <td>&#8592; <input type=text value=hello></input></td>
+    </tr>
+    <tr><td><input type="text" placeholder="variable-name"></td>
+      <td>= {{}}</td>
+      <td>= <input type=text placeholder="put a value here"></input></td></tr>
+  </table>
+
+  <span>template:</span>
+  <textarea id=template class=js-autoheight>
+    When I see someone I say {{words}}.
+  </textarea>
+</div>
+
+<button>+ add another template</button>
+
+<br>
+<hr>
+<h3>master template</h3>
+<textarea id=template class=js-autoheight>
+  {{sentence}}
+  {{tutorial-intro}}
+</textarea>
+
+<h3>output</h3>
+<textarea id=output class=js-autoheight>
+  When I see someone I say hello.
+  <div class="tutorial-intro">
+    <a href="http://www.airpair.com/angularjs/code-mentor-tony-childs">
+      <img title="Tony Childs AngularJS Code Mentor and Consultant" alt="AngularJS Code Mentor and Consultant Tony Childs" src="https://pbs.twimg.com/profile_images/599865688/icon_me_bigger.png" width="100px" class="tutorial-author circular" />
+    </a>
+    <p class="tutorial-description">
+      Tony Childs is an AngularJS consultant at Google. He has been coding since 1999 and consulting...
+      <a href="http://www.airpair.com/angularjs/code-mentor-tony-childs">Readmore</a>
+    </p>
+    <div style="clear:both"></div>
+  </div>
+</textarea>
+
+<br><br>
+<a href="http://handlebarsjs.com/" title="handlebars docs">handlebars docs</a>
+<br>
+<a href="https://hackpad.com/lazy-template-discussion-bCGvGsyiu4N" title="design discussion">design discussion</a>
+
+<pre>How to use
+- add variable names
+- add values for each variable
+- the "output" text area updates as you change these values
+- hit the clear button to remove values in preparation for pasting a new
+  set of values
+- if you run out of variable-name:value input boxes, another one is inserted
+  at the end of the list
+</pre>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+  $(main);
+  function main() {
+    $("body").on("keyup","textarea",function(){$(this).height(0).height(this.scrollHeight)});
+    $("body").on("keyup", "h3 > input", function(){$(this).width(0).width(this.scrollWidth)});
+    fixWidth('h3 > input')
+    fixHeight('#output')
+  }
+  function fixWidth(sel) {
+    $(sel).each(function(){$(this).width(0).width(this.scrollWidth)})
+  };
+  function fixHeight(sel) {
+    $(sel).each(function(){$(this).height(0).height(this.scrollHeight)})
+  };
+</script>
+
+</body>
+</html>
