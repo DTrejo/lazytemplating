@@ -1,15 +1,21 @@
 <html><body>
 <style>
   body {
-    width: 32em;
+    width: 36em;
     font-size: 125%;
     margin: 0 auto;
   }
   th > td {
     text-align: left;
   }
+  td > input {
+    width: 150px;
+  }
   #output, #template {
     width: 100%;
+  }
+  textarea, input, code {
+    font-family: monaco, Consolas, "Liberation Mono", Courier, monospace;
   }
   textarea {
     font-size: .7em;
@@ -23,16 +29,25 @@
   .partial {
     padding: .5em 1em;
     background-color: lightyellow;
+    border: 1px solid gold;
   }
   .partial + .partial {
     margin-top: 1em;
+  }
+  .quiet {
+    font-size: .8em;
+    font-color: lightgray;
+    font-weight: normal;
   }
 </style>
 <h1>lazy templating</h1>
 <br>
 
 <div class="partial">
-  <label>Template name: <input type=text placeholder="template-name" value="tutorial-intro"> = {{tutorial-intro}}</input></label>
+  <label>Template name:
+    <input type=text placeholder="template-name" value="tutorial-intro">
+    = <code>{{tutorial-intro}}</code></label>
+  </label>
   <table>
     <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
     <tr>
@@ -48,7 +63,7 @@
     </tr>
   </table>
 
-  <span>template:</span>
+  <label>template:
   <textarea id=template class=js-autoheight>
     <div class="tutorial-intro">
       <a href="{{url}}">
@@ -61,10 +76,14 @@
       <div style="clear:both"></div>
     </div>
   </textarea>
+  </label>
 </div>
 
 <div class="partial">
-  <label>Template name: <input type=text placeholder="template-name" value="sentence"></input> = {{sentence}}</label>
+  <label>
+    Template name:
+    <input type=text placeholder="template-name" value="sentence"></input>
+    = <code>{{sentence}}</code></label>
   <table>
     <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
     <tr>
@@ -78,23 +97,25 @@
       <td>= <input type=text placeholder="put a value here"></input></td></tr>
   </table>
 
-  <span>template:</span>
+  <label>template:
   <textarea id=template class=js-autoheight>
     When I see someone I say {{words}}.
   </textarea>
+  </label>
 </div>
 
 <button>+ add another template</button>
 
 <br>
 <hr>
-<h3>master template</h3>
+<label><h3>master template</h3>
 <textarea id=template class=js-autoheight>
   {{sentence}}
   {{tutorial-intro}}
 </textarea>
+</label>
 
-<h3>output</h3>
+<label><h3>output <span class=quiet>(auto-updates as you make changes)</span></h3>
 <textarea id=output class=js-autoheight>
   When I see someone I say hello.
   <div class="tutorial-intro">
@@ -108,6 +129,7 @@
     <div style="clear:both"></div>
   </div>
 </textarea>
+</label>
 
 <br><br>
 <a href="http://handlebarsjs.com/" title="handlebars docs">handlebars docs</a>
@@ -128,10 +150,14 @@
 <script>
   $(main);
   function main() {
-    $("body").on("keyup","textarea",function(){$(this).height(0).height(this.scrollHeight)});
-    $("body").on("keyup", "h3 > input", function(){$(this).width(0).width(this.scrollWidth)});
-    fixWidth('h3 > input')
+    var inputs = 'label > input';
+    $('body').on('keyup','textarea',function(){$(this).height(0).height(this.scrollHeight)});
+    $('body').on('keyup', inputs, function(){$(this).width(0).width(this.scrollWidth)});
+    fixWidth(inputs)
     fixHeight('#output')
+    $('#output').on('click', function() {
+      this.select()
+    })
   }
   function fixWidth(sel) {
     $(sel).each(function(){$(this).width(0).width(this.scrollWidth)})
