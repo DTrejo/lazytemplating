@@ -1,0 +1,39 @@
+body {
+  width: 36em;
+  font-size: 125%;
+  margin: 0 auto;
+}
+th > td {
+  text-align: left;
+}
+td > input {
+  width: 150px;
+}
+#output, .template, #master {
+  width: 100%;
+}
+textarea, input, code {
+  font-family: monaco, Consolas, "Liberation Mono", Courier, monospace;
+}
+textarea {
+  font-size: .7em;
+}
+input {
+  font-size: .9em;
+}
+h1 {
+  margin-bottom: 0;
+}
+.partial {
+  padding: .5em 1em;
+  background-color: lightyellow;
+  border: 1px solid gold;
+}
+.partial + .partial {
+  margin-top: 1em;
+}
+.quiet {
+  font-size: .8em;
+  font-color: lightgray;
+  font-weight: normal;
+}

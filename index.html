@@ -1,51 +1,39 @@
 <html><body>
-<style>
-  body {
-    width: 36em;
-    font-size: 125%;
-    margin: 0 auto;
-  }
-  th > td {
-    text-align: left;
-  }
-  td > input {
-    width: 150px;
-  }
-  #output, #template {
-    width: 100%;
-  }
-  textarea, input, code {
-    font-family: monaco, Consolas, "Liberation Mono", Courier, monospace;
-  }
-  textarea {
-    font-size: .7em;
-  }
-  input {
-    font-size: .9em;
-  }
-  h1 {
-    margin-bottom: 0;
-  }
-  .partial {
-    padding: .5em 1em;
-    background-color: lightyellow;
-    border: 1px solid gold;
-  }
-  .partial + .partial {
-    margin-top: 1em;
-  }
-  .quiet {
-    font-size: .8em;
-    font-color: lightgray;
-    font-weight: normal;
-  }
-</style>
+<link rel="stylesheet" href="style.css">
 <h1>lazy templating</h1>
 <br>
 
+<div>
 <div class="partial">
+  <label>
+    Template name:
+    <input class="name" type="text" placeholder="template-name" value="sentence"></input>
+    = <code class="helpertext">{{sentence}}</code></label>
+  <table>
+    <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
+    <tr>
+      <td><input type="text" placeholder="variable-name" value="words" class="varname"></td>
+      <td>= <span class="helpertext">{{words}}</span></td>
+      <td>= <input class="value" type="text" value=hello></input></td>
+      <td>&#8592; <input class="default" type="text" value=hello></input></td>
+    </tr>
+    <tr>
+      <td><input type="text" placeholder="variable-name" class="varname"></td>
+      <td>= <span class="helpertext">{{}}</span></td>
+      <td>= <input class="value" type="text" placeholder="put a value here"></input></td>
+      <td>&#8592; <input class="default" type="text" placeholder="put a value here"></input></td>
+    </tr>
+  </table>
+
+  <label>template:
+  <textarea class="template" class="js-autoheight">
+    When I see someone I say {{words}}.</textarea>
+  </label>
+</div>
+
+<!-- <div class="partial">
   <label>Template name:
-    <input type=text placeholder="template-name" value="tutorial-intro">
+    <input type="text" placeholder="template-name" value="tutorial-intro">
     = <code>{{tutorial-intro}}</code></label>
   </label>
   <table>
@@ -53,13 +41,13 @@
     <tr>
       <td><input type="text" placeholder="variable-name" value="url"></td>
       <td>= {{url}}</td>
-      <td>= <input type=text value="http://www.airpair.com/angularjs/code-mentor-tony-childs"></input></td>
-      <td>&#8592; <input type=text value=hello></input></td>
+      <td>= <input type="text" value="http://www.airpair.com/angularjs/code-mentor-tony-childs"></input></td>
+      <td>&#8592; <input type="text" value=hello></input></td>
     </tr>
     <tr><td><input type="text" placeholder="variable-name"></td>
       <td>= {{}}</td>
-      <td>= <input type=text placeholder="put a value here"></input></td>
-      <td>&#8592; <input type=text placeholder="default value"></input></td>
+      <td>= <input type="text" placeholder="put a value here"></input></td>
+      <td>&#8592; <input type="text" placeholder="default value"></input></td>
     </tr>
   </table>
 
@@ -78,45 +66,21 @@
   </textarea>
   </label>
 </div>
+<div> -->
 
-<div class="partial">
-  <label>
-    Template name:
-    <input type=text placeholder="template-name" value="sentence"></input>
-    = <code>{{sentence}}</code></label>
-  <table>
-    <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
-    <tr>
-      <td><input type="text" placeholder="variable-name" value="words"></td>
-      <td>= {{words}}</td>
-      <td>= <input type=text value=hello></input></td>
-      <td>&#8592; <input type=text value=hello></input></td>
-    </tr>
-    <tr><td><input type="text" placeholder="variable-name"></td>
-      <td>= {{}}</td>
-      <td>= <input type=text placeholder="put a value here"></input></td></tr>
-  </table>
-
-  <label>template:
-  <textarea id=template class=js-autoheight>
-    When I see someone I say {{words}}.
-  </textarea>
-  </label>
-</div>
-
-<button>+ add another template</button>
+<button id='addtemplate'>+ add another template</button>
 
 <br>
 <hr>
 <label><h3>master template</h3>
-<textarea id=template class=js-autoheight>
+<textarea id="master" class="js-autoheight">
   {{sentence}}
   {{tutorial-intro}}
 </textarea>
 </label>
 
-<label><h3>output <span class=quiet>(auto-updates as you make changes)</span></h3>
-<textarea id=output class=js-autoheight>
+<label><h3>output <span class="quiet">(auto-updates as you make changes)</span></h3>
+<textarea id="output" class="js-autoheight">
   When I see someone I say hello.
   <div class="tutorial-intro">
     <a href="http://www.airpair.com/angularjs/code-mentor-tony-childs">
@@ -144,9 +108,18 @@
   set of values
 - if you run out of variable-name:value input boxes, another one is inserted
   at the end of the list
+
+TODO features
+- hook up live update of output
+- hook up live update of fields: name = {{name}}
+- add templates
+- delete templates
+- saves all user input to localstorage so you can't lose data
+- have the output float on the right of the screen, with adjustable text
+  size?
 </pre>
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="bundle.js"></script>
 <script>
   $(main);
   function main() {
