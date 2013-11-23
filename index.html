@@ -26,13 +26,13 @@
       <td><input type="text" placeholder="variable-name" value="words" class="varname"></td>
       <td>= <span class="helpertext">{{words}}</span></td>
       <td>= <input class="value" type="text" value="hello"></td>
-      <td>&#8592; <input class="default" type="text" value="hello"></td>
+      <td>&larr; <input class="default" type="text" value="hello"></td>
     </tr>
     <tr>
       <td><input type="text" placeholder="variable-name" class="varname"></td>
       <td>= <span class="helpertext">{{}}</span></td>
       <td>= <input class="value" type="text" placeholder="put a value here"></td>
-      <td>&#8592; <input class="default" type="text" placeholder="put a value here"></td>
+      <td>&larr; <input class="default" type="text" placeholder="put a value here"></td>
     </tr>
   </table>
 
@@ -76,15 +76,20 @@
 - if you run out of variable-name:value input boxes, another one is inserted
   at the end of the list
 
-TODO features
-- hook up live update of output
-- hook up live update of fields: name = {{name}}
+features
 - add templates
 - delete templates
 - saves all user input to localstorage so you can't lose data
-- have the output float on the right of the screen, with adjustable text
-  size?
+- TODO: allow multiple "workspaces"?
+- WARNING: to delete all data and start from scratch,
+  run `delete localStorage.state` in your javascript console.
 </pre>
+
+<h2>Created by
+  <a href="http://dtrejo.com">David Trejo</a> &rarr;
+  <a href="http://twitter.com/ddtrejo">@ddtrejo</a> &rarr;
+  <a href="http://blog.dtrejo.com">blog.dtrejo.com</a>.
+</h2>
 
 <script src="bundle.js"></script>
 <script>
