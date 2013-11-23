@@ -1,4 +1,4 @@
-# [lazy templating][demo]
-# [demo][demo]
+# [lazy templating][1]
+# see the demo at [dtrejo.com/lazytemplating][1]
 
-demo:http://dtrejo.com/lazytemplating
+[1]:http://dtrejo.com/lazytemplating
