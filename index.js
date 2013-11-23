@@ -160,6 +160,7 @@ $(function() {
   $('.partial table .default').live('keyup paste cut', onValue)
   function onValue(e) {
     var el = $(e.target)
+    el.attr('value', el.val())
     renderMaster(render(partial(el)))
   }
   $('.partial .template').live('keyup paste cut', onTemplate)
