@@ -1,72 +1,48 @@
 <html><body>
-<link rel="stylesheet" href="style.css">
-<h1>lazy templating</h1>
-<br>
+<head>
+  <meta charset="utf-8">
+  <title>lazytemplating</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<h1>lazy templating</h1>
+<img id="spin" src="spinner.gif" style="margin-right:1em">
+<div id="state">
 <div>
 <div class="partial">
   <label>
     Template name:
-    <input class="name" type="text" placeholder="template-name" value="sentence"></input>
-    = <code class="helpertext">{{sentence}}</code></label>
+    <input class="name" type="text" placeholder="template-name" value="sentence">
+    = <code class="helpertext">{{sentence}}</code>
+  </label>
   <table>
-    <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
+    <tr>
+      <th>variable-name</th>
+      <th>&nbsp;</th>
+      <th>value <button class="clearvalues">X clear values</button></th>
+      <th>default</th>
+    </tr>
     <tr>
       <td><input type="text" placeholder="variable-name" value="words" class="varname"></td>
       <td>= <span class="helpertext">{{words}}</span></td>
-      <td>= <input class="value" type="text" value=hello></input></td>
-      <td>&#8592; <input class="default" type="text" value=hello></input></td>
+      <td>= <input class="value" type="text" value="hello"></td>
+      <td>&#8592; <input class="default" type="text" value="hello"></td>
     </tr>
     <tr>
       <td><input type="text" placeholder="variable-name" class="varname"></td>
       <td>= <span class="helpertext">{{}}</span></td>
-      <td>= <input class="value" type="text" placeholder="put a value here"></input></td>
-      <td>&#8592; <input class="default" type="text" placeholder="put a value here"></input></td>
+      <td>= <input class="value" type="text" placeholder="put a value here"></td>
+      <td>&#8592; <input class="default" type="text" placeholder="put a value here"></td>
     </tr>
   </table>
 
   <label>template:
-  <textarea class="template" class="js-autoheight">
-    When I see someone I say {{words}}.</textarea>
+    <textarea class="template" class="js-autoheight">
+      When I see someone I say {{words}}.</textarea>
   </label>
+  <div style="text-align:right"><button class="del">X delete template</button></div>
+</div> <!-- end .partial -->
 </div>
-
-<!-- <div class="partial">
-  <label>Template name:
-    <input type="text" placeholder="template-name" value="tutorial-intro">
-    = <code>{{tutorial-intro}}</code></label>
-  </label>
-  <table>
-    <tr><th>variable-name</th><th>&nbsp;</th><th>value <button>X clear values</button></th><th>default</th></tr>
-    <tr>
-      <td><input type="text" placeholder="variable-name" value="url"></td>
-      <td>= {{url}}</td>
-      <td>= <input type="text" value="http://www.airpair.com/angularjs/code-mentor-tony-childs"></input></td>
-      <td>&#8592; <input type="text" value=hello></input></td>
-    </tr>
-    <tr><td><input type="text" placeholder="variable-name"></td>
-      <td>= {{}}</td>
-      <td>= <input type="text" placeholder="put a value here"></input></td>
-      <td>&#8592; <input type="text" placeholder="default value"></input></td>
-    </tr>
-  </table>
-
-  <label>template:
-  <textarea id=template class=js-autoheight>
-    <div class="tutorial-intro">
-      <a href="{{url}}">
-        <img title="Tony Childs AngularJS Code Mentor and Consultant" alt="AngularJS Code Mentor and Consultant Tony Childs" src="https://pbs.twimg.com/profile_images/599865688/icon_me_bigger.png" width="100px" class="tutorial-author circular" />
-      </a>
-      <p class="tutorial-description">
-        Tony Childs is an AngularJS consultant at Google. He has been coding since 1999 and consulting...
-        <a href="{{url}}">Readmore</a>
-      </p>
-      <div style="clear:both"></div>
-    </div>
-  </textarea>
-  </label>
-</div>
-<div> -->
 
 <button id='addtemplate'>+ add another template</button>
 
@@ -75,25 +51,16 @@
 <label><h3>master template</h3>
 <textarea id="master" class="js-autoheight">
   {{sentence}}
-  {{tutorial-intro}}
+  {{tutorial}}
 </textarea>
 </label>
 
 <label><h3>output <span class="quiet">(auto-updates as you make changes)</span></h3>
 <textarea id="output" class="js-autoheight">
   When I see someone I say hello.
-  <div class="tutorial-intro">
-    <a href="http://www.airpair.com/angularjs/code-mentor-tony-childs">
-      <img title="Tony Childs AngularJS Code Mentor and Consultant" alt="AngularJS Code Mentor and Consultant Tony Childs" src="https://pbs.twimg.com/profile_images/599865688/icon_me_bigger.png" width="100px" class="tutorial-author circular" />
-    </a>
-    <p class="tutorial-description">
-      Tony Childs is an AngularJS consultant at Google. He has been coding since 1999 and consulting...
-      <a href="http://www.airpair.com/angularjs/code-mentor-tony-childs">Readmore</a>
-    </p>
-    <div style="clear:both"></div>
-  </div>
 </textarea>
 </label>
+</div> <!-- end state -->
 
 <br><br>
 <a href="http://handlebarsjs.com/" title="handlebars docs">handlebars docs</a>
@@ -124,7 +91,7 @@ TODO features
   $(main);
   function main() {
     var inputs = 'label > input';
-    $('body').on('keyup','textarea', function() { fixHeight(this) })
+    $('body').on('keyup', 'textarea', function() { fixHeight(this) })
     $('body').on('keyup', inputs, function(){ fixWidth(this) })
     fixWidth(inputs)
     fixHeight('#output')
@@ -135,12 +102,14 @@ TODO features
   function fixWidth(sel) {
     $(sel).each(function(){
       var me = $(this)
+      if (!me.val()) return
       var size = me.width(me.width(0)[0].scrollWidth);
     })
   };
   function fixHeight(sel) {
     $(sel).each(function(){
       var me = $(this)
+      if (!me.val()) return
       var size = me.height(me.height(0)[0].scrollHeight);
     })
   }
