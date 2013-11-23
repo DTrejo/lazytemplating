@@ -1,0 +1,31 @@
+{
+  "name": "lazytemplating",
+  "version": "0.0.0",
+  "description": "a single page app that makes it for ppl who don't want to code to write templates",
+  "main": "index.js",
+  "dependencies": {
+    "jquery-browserify": "~1.8.1",
+    "lodash": "~1.3.1",
+    "mustache": "~0.7.2",
+    "underscore": "~1.5.2"
+  },
+  "devDependencies": {
+    "beefy": "~0.5.0",
+    "browserify": "~2.35.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "beefy index.js:bundle.js --live --open --debug=true",
+    "build": "browserify index.js -d > bundle.js"
+  },
+  "keywords": [
+    "templating",
+    "normal",
+    "people",
+    "lazy",
+    "mustache",
+    "handlebars"
+  ],
+  "author": "David Trejo",
+  "license": "BSD-2-Clause"
+}
