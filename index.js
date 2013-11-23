@@ -81,7 +81,9 @@ function renderMaster(data) {
 
   var templ = a($('#master')).attr('value')
   var output = Mustache.render(templ, context)
+  l('output', output)
   $('#output').attr('value', output)
+    .trigger('keyup') // to adjust the height
 
   // save the state of the UI, so you can't lose work if tab is close
   storage('state', $('#state').html())
@@ -166,10 +168,13 @@ $(function() {
   $('.partial .template').live('keyup paste cut', onTemplate)
   function onTemplate(e) {
     var el = $(e.target)
+    el.text(el.val())
     renderMaster(render(partial(el)))
   }
   $('#master').on('keyup paste cut', onMaster)
   function onMaster(e) {
+    var el = $(e.target)
+    el.text(el.val())
     renderMaster()
   }
 
@@ -183,7 +188,7 @@ $(function() {
     var p = partial(el)
     var fields = p.find('.value')
     a(fields)
-    fields.attr('value', '') // put state in html so it is saveable
+    fields.attr('value', null) // put state in html so it is saveable
     fields.trigger('cut')
   })
 
@@ -204,12 +209,13 @@ $(function() {
     l('bang')
     var last = $('.partial:last')
     var p = last.clone()
-    var fields = a(p.find('tr'))
-    map(fields, function(el) {
-      clearField($(el))
-    });
+    var fields = a(p.find('tr:not(:has(th))'))
+    var first = fields.first()
+    clearField(first)
+    first.siblings(':not(:has(th))').remove()
+
     p.find('.template').text('')
-    p.find('.name').attr('value', '')
+    p.find('.name').attr('value', null)
     p.find('.helpertext:first').text('{{}}')
     p.hide()
     last.after(p)
@@ -246,7 +252,7 @@ function ensureEmptyLastField(el) {
 function clearField(tr) {
   [ '.varname', '.value', '.default']
   .forEach(function(classname) {
-    tr.find(classname).attr('value', '')
+    tr.find(classname).attr('value', null)
   })
   tr.find('.helpertext').text('{{}}')
 }
