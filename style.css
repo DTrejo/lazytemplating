@@ -37,3 +37,8 @@ h1 {
   font-color: lightgray;
   font-weight: normal;
 }
+
+#renderedOutput {
+  font-size: 80%;
+  font-family: arial, sans-serif;
+}

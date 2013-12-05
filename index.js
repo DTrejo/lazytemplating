@@ -85,6 +85,9 @@ function renderMaster(data) {
   $('#output').attr('value', output)
     .trigger('keyup') // to adjust the height
 
+  // so users can copy-paste into emails
+  $('#renderedOutput').html(output)
+
   // save the state of the UI, so you can't lose work if tab is close
   storage('state', $('#state').html())
   spin(false)
