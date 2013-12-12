@@ -4,7 +4,7 @@ window.l = l
 window.a = a
 
 var assert = require('assert')
-var Mustache = require('mustache')
+var Handlebars = require('handlebars')
 
 function l() {
   console.log.apply(console, arguments)
@@ -52,7 +52,7 @@ function render(partial) {
   var templ = a(partial.find('.template')).text()
 
   var fields = partial.find('tr')
-  var view = map(fields, function(el) { return $(el) })
+  var context = map(fields, function(el) { return $(el) })
     .reduce(function(acc, el) {
       if (el.find('th').length) return acc
 
@@ -64,7 +64,7 @@ function render(partial) {
       return acc
     }, {})
 
-  var output = Mustache.render(templ, view)
+  var output = Handlebars.compile(templ)(context)
 
   var context = {}
   context[pname] = output
@@ -80,7 +80,7 @@ function renderMaster(data) {
   console.log('master context', context)
 
   var templ = a($('#master')).attr('value')
-  var output = Mustache.render(templ, context)
+  var output = Handlebars.compile(templ)(context)
   l('output', output)
   $('#output').attr('value', output)
     .trigger('keyup') // to adjust the height
