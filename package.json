@@ -1,6 +1,6 @@
 {
   "name": "lazytemplating",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "a single page app that makes it for ppl who don't want to code to write templates",
   "main": "index.js",
   "dependencies": {
